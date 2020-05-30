@@ -46,6 +46,13 @@ class Developer(Resource):
 class DevelopersList(Resource):
   def get(self):
     return developers
+  def post(self):
+    data = json.loads(request.data)
+    data['id'] = len(developers)
+    developers.append(data)
+    message = 'The User {} has been created'.format(data['name'])
+    return log('Success', message)
+
 
 api.add_resource(DevelopersList, '/dev/')
 api.add_resource(Developer, '/dev/<int:id>')
