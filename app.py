@@ -5,6 +5,39 @@ app = Flask(__name__)
 api = Api(app)
 
 
+developers = [
+  {
+    'id': '0',
+    'name': 'João Victor',
+    'skills': ['Python', 'Flask', 'Javascript', 'Node', 'React JS', 'React Native']
+  },
+  # Other Developers Below...
+]
+
+def log(type, message):
+  if type == 'Error':
+    message =  {'Status': 'Error', 'Message': message}
+
+  return message
+
+class Developer(Resource):
+  def get(self, id):
+    try:
+      response = developers[id]
+    except IndexError:
+      message = 'Developer ID {} not exists!'.format(id)
+      response = log('Error', message)
+    except Exception:
+      message = 'Unknown Error. Contact the Administrator of API'
+      response = log('Error', message)
+    
+    return response
+  def put(self):
+    return ''
+  def delete(self):
+    return ''
+
+api.add_resource(Developer, '/dev/<int:id>')
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
