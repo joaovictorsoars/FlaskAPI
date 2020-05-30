@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Resource, Api
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -32,8 +33,10 @@ class Developer(Resource):
       response = log('Error', message)
     
     return response
-  def put(self):
-    return ''
+  def put(self, id):
+    data = json.loads(request.data)
+    developers[id] = data
+    return data
   def delete(self):
     return ''
 
