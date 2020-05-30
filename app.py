@@ -43,6 +43,11 @@ class Developer(Resource):
     message = 'Record ID {} deleted'.format(id)
     return log('Success', message)
 
+class DevelopersList(Resource):
+  def get(self):
+    return developers
+
+api.add_resource(DevelopersList, '/dev/')
 api.add_resource(Developer, '/dev/<int:id>')
 
 if __name__ == "__main__":
