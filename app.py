@@ -18,7 +18,8 @@ developers = [
 def log(type, message):
   if type == 'Error':
     message =  {'Status': 'Error', 'Message': message}
-
+  elif type == 'Success':
+    message = {'Status': 'Sucess', 'Message': message}
   return message
 
 class Developer(Resource):
@@ -37,8 +38,10 @@ class Developer(Resource):
     data = json.loads(request.data)
     developers[id] = data
     return data
-  def delete(self):
-    return ''
+  def delete(self, id):
+    developers.pop(id)
+    message = 'Record ID {} deleted'.format(id)
+    return log('Success', message)
 
 api.add_resource(Developer, '/dev/<int:id>')
 
